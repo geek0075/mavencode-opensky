@@ -11,7 +11,7 @@ class Api {
                 } else {
                     reject(new Error(`Invalid username or password`)); 
                 }
-            }, 10000);
+            }, 5000);
         });
     }
 }
