@@ -178,6 +178,7 @@ class AirportList extends React.Component {
                     </DialogFooter>
                 </Dialog>
                 <div className="time-interval">
+                    <p>Select number of days to get flights for:</p>
                     <Radio label='1 Day(s)' key='1days'>
                         <NativeRadioControl
                             name='timeInterval'
@@ -228,11 +229,13 @@ class AirportList extends React.Component {
                             onChange={this.handleTimeIntervalChange} />
                     </Radio>
                 </div>
-                <ul className='grid'>
-                    {airports.map((airport, index) => (
-                        <Airport key={index} {...airport} onClick={() => this.handleAirportClick(airport.icao)} />
-                    ))}
-                </ul>
+                <div className="grid-content">
+                    <ul className='grid'>
+                        {airports.map((airport, index) => (
+                            <Airport key={index} {...airport} onClick={() => this.handleAirportClick(airport.icao)} />
+                        ))}
+                    </ul>
+                </div>
             </div>
         );
     }

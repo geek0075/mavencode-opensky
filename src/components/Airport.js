@@ -39,27 +39,15 @@ class Airport extends React.Component {
         const { onClick, name, city, icao } = this.props;
         return (
             <li>
-                <Card className='mdc-card airport-card'>
-                    <CardPrimaryContent className='airport-card__primary-action'>
-                        <div className='airport-card__primary'>
-                            <Headline6 className='airport-card__title'>
-                                {city}
-                            </Headline6>
-                            <Subtitle2 className='airport-card__subtitle'>
-                                icao: {icao}
-                            </Subtitle2>
-                        </div>
-                        <Body2 className='airport-card__secondary'>
-                            {name}
-                        </Body2>
-                    </CardPrimaryContent>
-                    <CardActions>
-                        <CardActionButtons>
-                            <Button 
-                                raised={true} 
-                                onClick={() => onClick()}>Get Flights</Button>
-                        </CardActionButtons>
-                    </CardActions>
+                <Card className='mdc-card'>
+                    <div className='my-card-content'>
+                        <h1>{city}</h1>
+                        <h4>icao: {icao}</h4>
+                        <p>{name}</p>
+                        <Button 
+                            raised={true} 
+                            onClick={() => onClick()}>Get Flights</Button>
+                    </div>
                 </Card>
             </li>
         );
