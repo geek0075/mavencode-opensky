@@ -40,6 +40,7 @@
     "@material/react-card": "^0.10.0",
     "@material/react-dialog": "^0.10.0",
     "@material/react-material-icon": "^0.10.0",
+    "@material/react-radio": "^0.10.0",
     "@material/react-snackbar": "^0.10.0",
     "@material/react-text-field": "^0.10.0",
     "@material/react-typography": "^0.8.0",

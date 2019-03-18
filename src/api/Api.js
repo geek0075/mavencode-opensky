@@ -20,9 +20,6 @@ class Api {
         const departuresUrl = `https://opensky-network.org/api/flights/departure?airport=${airport}&begin=${begin}&end=${end}`;
         let arrivals = null;
         let departures = null;
-        console.log(`Api.fetchFlights: arrivalsUrl => ${arrivalsUrl}`);
-        console.log(`Api.fetchFlights: departuresUrl => ${departuresUrl}`);
-        console.log(`Api.fetchFlights: airport => ${airport}, begin => ${begin}, end => ${end}`);
         return new Promise((resolve, reject) => {
             fetch(arrivalsUrl)
             .then((response) => {

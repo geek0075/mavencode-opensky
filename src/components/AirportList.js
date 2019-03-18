@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Airport from './Airport';
 
 import "@material/react-dialog/dist/dialog.css";
+import '@material/react-radio/dist/radio.css';
 
 import Dialog, {
     DialogTitle,
@@ -10,7 +11,9 @@ import Dialog, {
     DialogFooter,
     DialogButton,
 } from '@material/react-dialog';
-  
+
+import Radio, { NativeRadioControl } from '@material/react-radio';
+
 import toastr from 'toastr';
 import 'toastr/build/toastr.css';
 
@@ -18,32 +21,35 @@ class AirportList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            timeInterval: '86400000',
             isOpen: false,
             airport: null
         };
         this.handleAirportClick = this.handleAirportClick.bind(this);
         this.handleDialogClose = this.handleDialogClose.bind(this);
-        this.openDialog = this.openDialog.bind(this);
+        this.handleTimeIntervalChange = this.handleTimeIntervalChange.bind(this);
     }
 
     handleAirportClick(icao) {
-        const { onAirportClick } = this.props;
+        const { onAirportClick, timeIntervalMillis } = this.props;
         this.setState(Object.assign({}, this.state, {isOpen: true, airport: icao}));
-        onAirportClick(icao);
+        onAirportClick(icao, timeIntervalMillis);
     }
 
     handleDialogClose(action) {
-        console.log(`AirportList.handleDialogClose: action => ${action}`)
         this.setState(Object.assign({}, this.state, {isOpen: false, airport: null}));
     }
 
-    openDialog() {
-        this.setState(Object.assign({}, this.state, {isOpen: true}));
+    handleTimeIntervalChange(event) {
+        const { onTimeIntervalChange } = this.props;
+        const timeIntervalMillis = parseInt(event.target.value);
+        this.setState(Object.assign({}, this.state, {timeInterval: event.target.value}));
+        onTimeIntervalChange(timeIntervalMillis);
     }
 
     render() {
         const { airports, flightsByAirport } = this.props;
-        const { isOpen, airport } = this.state;
+        const { timeInterval, isOpen, airport } = this.state;
         let isFetching = false;
         let isSuccess = false;
         let arrivals = [];
@@ -166,6 +172,57 @@ class AirportList extends React.Component {
                         <DialogButton action='dismiss' disabled={isFetching}>Dismiss</DialogButton>
                     </DialogFooter>
                 </Dialog>
+                <div className="time-interval">
+                    <Radio label='1 Day(s)' key='1days'>
+                        <NativeRadioControl
+                            name='timeInterval'
+                            checked={timeInterval==='86400000'}
+                            value='86400000'
+                            onChange={this.handleTimeIntervalChange} />
+                    </Radio>
+                    <Radio label='2 Day(s)' key='2days'>
+                        <NativeRadioControl
+                            name='timeInterval'
+                            checked={timeInterval==='172800000'}
+                            value='172800000'
+                            onChange={this.handleTimeIntervalChange} />
+                    </Radio>
+                    <Radio label='3 Day(s)' key='3days'>
+                        <NativeRadioControl
+                            name='timeInterval'
+                            checked={timeInterval==='259200000'}
+                            value='259200000'
+                            onChange={this.handleTimeIntervalChange} />
+                    </Radio>
+                    <Radio label='4 Day(s)' key='4days'>
+                        <NativeRadioControl
+                            name='timeInterval'
+                            checked={timeInterval==='345600000'}
+                            value='345600000'
+                            onChange={this.handleTimeIntervalChange} />
+                    </Radio>
+                    <Radio label='5 Day(s)' key='5days'>
+                        <NativeRadioControl
+                            name='timeInterval'
+                            checked={timeInterval==='432000000'}
+                            value='432000000'
+                            onChange={this.handleTimeIntervalChange} />
+                    </Radio>
+                    <Radio label='6 Day(s)' key='6days'>
+                        <NativeRadioControl
+                            name='timeInterval'
+                            checked={timeInterval==='518400000'}
+                            value='518400000'
+                            onChange={this.handleTimeIntervalChange} />
+                    </Radio>
+                    <Radio label='7 Day(s)' key='7days'>
+                        <NativeRadioControl
+                            name='timeInterval'
+                            checked={timeInterval==='604800000'}
+                            value='604800000'
+                            onChange={this.handleTimeIntervalChange} />
+                    </Radio>
+                </div>
                 <ul className='grid'>
                     {airports.map((airport, index) => (
                         <Airport key={index} {...airport} onClick={() => this.handleAirportClick(airport.icao)} />

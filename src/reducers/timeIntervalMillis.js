@@ -1,4 +1,4 @@
-const initialState = 300000;
+const initialState = 86400000;
 
 const timeIntervalMillis = (state = initialState, action) => {
   switch (action.type) {
