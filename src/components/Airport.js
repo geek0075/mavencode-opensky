@@ -30,27 +30,15 @@ import {
     Subtitle2,
 } from '@material/react-typography';
 
-import toastr from 'toastr';
-import 'toastr/build/toastr.css';
-
 class Airport extends React.Component {
     constructor(props) {
         super(props);
-        this.handleAirportClick = this.handleAirportClick.bind(this);
-    }
-
-    handleAirportClick(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        toastr.error(`Airport click!`);
-        const { onClick } = this.props;
-        // onClick();
     }
 
     render() {
         const { onClick, name, city, icao } = this.props;
         return (
-            <li onClick={onClick}>
+            <li>
                 <Card className='mdc-card airport-card'>
                     <CardPrimaryContent className='airport-card__primary-action'>
                         <div className='airport-card__primary'>
@@ -69,7 +57,7 @@ class Airport extends React.Component {
                         <CardActionButtons>
                             <Button 
                                 raised={true} 
-                                onClick={this.handleAirportClick}>Get Flights</Button>
+                                onClick={() => onClick()}>Get Flights</Button>
                         </CardActionButtons>
                     </CardActions>
                 </Card>

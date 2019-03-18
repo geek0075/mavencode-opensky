@@ -28,22 +28,22 @@ function* watchLoginRequest() {
 
 function* flightsRequest(action) {
     try {
-        const user = yield call(Api.fetchFlights, action.airport, action.password);
-        console.log(`sagas.loginRequest.LOGIN_SUCCEEDED: user => ${JSON.stringify(user)}`);
-        yield put({type: FETCH_FLIGHTS_SUCCEEDED, user});
+        const flights = yield call(Api.fetchFlights, action.airport, action.begin, action.end);
+        console.log(`sagas.flightsRequest.FETCH_FLIGHTS_SUCCEEDED: flights => ${JSON.stringify(flights)}`);
+        yield put({type: FETCH_FLIGHTS_SUCCEEDED, airport: action.airport, arrivals: flights.arrivals, departures: flights.departures});
     } catch (error) {
-        console.log(`sagas.loginRequest.LOGIN_FAILED: error => ${JSON.stringify(error)}`);
-        yield put({type: LOGIN_FAILED, message: error.message});
+        console.log(`sagas.loginRequest.flightsRequest: error => ${JSON.stringify(error)}`);
+        yield put({type: FETCH_FLIGHTS_FAILED, message: error.message});
     }
 }
 
-function* helloSaga() {
-    console.log('Hello Sagas!');
-};
+function* watchFlightsRequest() {
+    yield takeLatest(FETCH_FLIGHTS, flightsRequest);
+}
 
 export default function* rootSaga() {
     yield all([
-        helloSaga(),
-        watchLoginRequest()
+        watchLoginRequest(),
+        watchFlightsRequest()
     ])
 };

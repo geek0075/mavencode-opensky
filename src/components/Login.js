@@ -81,6 +81,11 @@ class Login extends React.Component {
         else if (!user.isSuccess && !user.user && user.message) toastr.error(user.message);
         return (
             <div>
+                {(user && user.isFetching) &&
+                    <div class="fa-3x progress">
+                        <i class="fas fa-spinner fa-pulse"></i>
+                    </div>
+                }
                 <form className="container">
                     <section className="header">
                         <h1>OPENSKY</h1>
