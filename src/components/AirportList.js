@@ -23,7 +23,8 @@ class AirportList extends React.Component {
         this.state = {
             timeInterval: '86400000',
             isOpen: false,
-            airport: null
+            airport: null,
+            airportName: null
         };
         this.handleAirportClick = this.handleAirportClick.bind(this);
         this.handleDialogClose = this.handleDialogClose.bind(this);
@@ -31,13 +32,17 @@ class AirportList extends React.Component {
     }
 
     handleAirportClick(icao) {
-        const { onAirportClick, timeIntervalMillis } = this.props;
-        this.setState(Object.assign({}, this.state, {isOpen: true, airport: icao}));
+        const { airports, onAirportClick, timeIntervalMillis } = this.props;
+        const airport = airports.find((item) => { 
+            return item.icao === icao;
+        });
+        const airportName = airport ? airport.name : icao;
+        this.setState(Object.assign({}, this.state, {isOpen: true, airport: icao, airportName}));
         onAirportClick(icao, timeIntervalMillis);
     }
 
     handleDialogClose(action) {
-        this.setState(Object.assign({}, this.state, {isOpen: false, airport: null}));
+        this.setState(Object.assign({}, this.state, {isOpen: false, airport: null, airportName: null}));
     }
 
     handleTimeIntervalChange(event) {
@@ -49,7 +54,7 @@ class AirportList extends React.Component {
 
     render() {
         const { airports, flightsByAirport } = this.props;
-        const { timeInterval, isOpen, airport } = this.state;
+        const { timeInterval, isOpen, airport, airportName } = this.state;
         let isFetching = false;
         let isSuccess = false;
         let arrivals = [];
@@ -74,7 +79,7 @@ class AirportList extends React.Component {
                     open={isOpen}
                     escapeKeyAction=''
                     onClose={(action) => this.handleDialogClose(action)}>
-                    <DialogTitle>{airport} FLIGHTS</DialogTitle>
+                    <DialogTitle>{airportName && airportName.toUpperCase()} FLIGHTS</DialogTitle>
                     <DialogContent>
                         {isFetching ? (
                             <div className="modal-content">
